@@ -1,11 +1,5 @@
+from AdventOfCode.parse_utils import parse_file_to_char_array
 from Utils.Logger import logger
-
-
-def parse_file_to_char_array(file):
-    output = []
-    for line in file:
-        output.append(list(line))
-    return output
 
 def filter_options(options, x, y):
     valid_options = []
