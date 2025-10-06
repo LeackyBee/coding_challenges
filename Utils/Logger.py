@@ -10,9 +10,12 @@ class Logger:
     def disable(self):
         self._enabled = False
 
-    def print(self, message):
+    def debug(self, message = ""):
         if self._enabled:
             print(str(message))
+
+    def print(self, message = ""):
+        print(str(message))
 
 
 logger = Logger()
