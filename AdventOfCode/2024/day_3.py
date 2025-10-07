@@ -1,6 +1,6 @@
 from curses.ascii import isdigit
 
-from Utils.Logger import logger
+from Utils.logger import logger
 
 
 

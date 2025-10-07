@@ -1,6 +1,6 @@
 import io
 
-from Utils.Logger import logger
+from Utils.logger import logger
 
 
 def parse_file(file):

@@ -1,6 +1,6 @@
 import io
 
-from Utils.Logger import logger
+from Utils.logger import logger
 
 if __name__ == "__main__":
     filepath = input("Input File Path: ")

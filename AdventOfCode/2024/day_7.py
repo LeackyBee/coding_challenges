@@ -1,6 +1,6 @@
 import io
 
-from Utils.Logger import logger
+from Utils.logger import logger
 
 """
 This one was pretty easy, you just treat it like a breadth first search and each operation as an edge
