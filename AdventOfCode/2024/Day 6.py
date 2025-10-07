@@ -4,106 +4,146 @@ from copy import deepcopy
 from AdventOfCode.parse_utils import parse_file_to_char_array, parse_char_array_to_string
 from Utils.Logger import logger
 
-# map direction to letter
-dir_map = {0: {1: "R", -1: "L"},
-           1: {0: "D"},
-           -1: {0: "U"}}
+"""
+Part 2 here (find_loops) took me way longer than normal, the key insight was that you can't place a block on the path.
+Since if you did, you couldn't be where you currently are.
 
-# when heading (0,1), check (1,0) for "D"
-check_dir_map = {0: {1: (1, 0, "D"), -1: (-1, 0, "U")},
-                 1: {0: (0, -1, "L")},
-                 -1: {0: (0, 1, "R")}}
+Another hurdle was that my code was attempting to put an obstacle outside the map - which isn't possible
+This took a LONG time to figure out, but finally looked at my code and went "hang on"
+"""
 
 def find_start(grid):
+    logger.debug("Finding start...")
     for y in range(len(grid)):
         for x in range(len(grid[y])):
             if grid[y][x] == "^":
                 return (y, x)
     raise ValueError("No start found")
 
+def turn_right(direction):
+    logger.debug("Turning right!")
+    return (direction[1], -direction[0])
+
+def within_bounds(grid, pos):
+    return pos[0] >=0 and pos[0] < len(grid) and pos[1] >= 0 and pos[1] < len(grid[0])
+
+def step(pos, direction):
+    return (pos[0] + direction[0], pos[1] + direction[1])
+
+def get_dir_char(direction):
+    dir_map = {
+        (0,1): "R",
+        (0,-1): "L",
+        (1,0): "D",
+        (-1,0): "U",
+    }
+    return dir_map[direction[0]][direction[1]]
 
 def map_patrol(grid):
-    grid = grid.copy()
+    # find at guard pos
+    # set pos = guard pos
+    # loop:
+    # if pos is not marked as X, mark it as X and add 1 to count
+    # get next pos by pos + dir
+    # check if next pos is free, if so set pos = next pos
+    # if not, change direction and don't touch pos
     pos = find_start(grid)
     direction = (-1,0)
-
-
-
-    grid[pos[0]][pos[1]] = "X"
-    count = 1
-    next_pos = (pos[0]+direction[0],pos[1]+direction[1])
+    count = 0
     logger.debug(parse_char_array_to_string(grid))
-    while next_pos[0] >= 0 and next_pos[0] < len(grid) and next_pos[1] >= 0 and next_pos[1] < len(grid[0]):
-        next_pos = (pos[0] + direction[0], pos[1] + direction[1])
+    while within_bounds(grid, pos):
+        if grid[pos[0]][pos[1]] != "X":
+            grid[pos[0]][pos[1]] = "X"
+            count += 1
+        next_pos = step(pos, direction)
         logger.debug(f"Current position: {pos}")
         logger.debug(f"Current direction: {direction}")
         logger.debug(f"Next position: {next_pos}")
-        if grid[next_pos[0]][next_pos[1]] == "#":
-            logger.debug("Wall! Turning right")
-            direction = (direction[1], -direction[0])
+        if within_bounds(grid, next_pos) and grid[next_pos[0]][next_pos[1]] == "#":
+            direction = turn_right(direction)
             logger.debug(parse_char_array_to_string(grid))
-            continue
-        elif grid[next_pos[0]][next_pos[1]] != "X":
-            grid[next_pos[0]][next_pos[1]] = "X"
-            count += 1
-        pos = (pos[0]+direction[0],pos[1]+direction[1])
-
-        next_pos = (pos[0] + direction[0], pos[1] + direction[1])
-
+        else:
+            pos = next_pos
     logger.debug(parse_char_array_to_string(grid))
-    return count, grid
+    return count
 
-def check_direction(grid, direction, pos, value):
-    while grid[pos[0]][pos[1]] != value:
-        grid[pos[0]][pos[1]] = value
-        npos = (pos[0] + direction[0], pos[1] + direction[1])
-        logger.debug(f"Currently checking: {npos}")
-        if npos[0] < 0 or npos[0] >= len(grid) or npos[1] < 0 or npos[1] >= len(grid[0]):
-            return False
-        if grid[npos[0]][npos[1]] == "#":
-            direction = (direction[1], -direction[0])
-            value = dir_map[direction[0]][direction[1]]
-            npos = (pos[0] + direction[0], pos[1] + direction[1])
-        pos = npos
-    return True
+def check_direction(grid, pos, direction):
+    # start at pos
+    # while pos is within bounds
+    # if current pos has current direction marker, return true (we've found a path we've already been on in this direction)
+    # set current pos to have current direction marker
+    # get next pos
+    # if next pos is a wall, turn right and change direction marker
+    # else set pos = next pos
+    # if the loop escapes, return false
+    char = get_dir_char(direction)
+    logger.debug("Checking direction...")
+    logger.debug(f"Current grid")
+    logger.debug(parse_char_array_to_string(grid))
+    logger.debug(f"Current position: {pos}")
+    logger.debug(f"Current direction: {direction}")
+    logger.debug("Entering loop")
+    while within_bounds(grid, pos):
+        logger.debug(f"Current position: {pos}")
+        if char in grid[pos[0]][pos[1]]:
+            return True
+        if grid[pos[0]][pos[1]] == ".":
+            grid[pos[0]][pos[1]] = char
+        else:
+            grid[pos[0]][pos[1]] += char
+        next_pos = step(pos, direction)
+        if within_bounds(grid, next_pos) and grid[next_pos[0]][next_pos[1]] == "#":
+            direction = turn_right(direction)
+            char = get_dir_char(direction)
+        else:
+            pos = next_pos
+    return False
+
+
 
 def find_loops(grid):
-    # find points where a right turn would put you back on the path
-    # instead of Xs, put either U, D, L, or R (Up, Down, Left, Right)
-    # if moving left, check for U's above, if right, D's below, etc
-
+    # find guard pos
+    # set pos = guard pos
+    # mark current pos with direction
+    # get next pos
+    # if next pos is a wall, turn right and continue
+    # otherwise if the next tile is unvisited, deepcopy the grid and send a ray out to the right
+    #   if it lands on a square with the same direction, it returns true and we add 1 to our count
+    #   otherwise, it must eventually escape the grid, so once that happens return false
+    # set pos = next_pos
     pos = find_start(grid)
     direction = (-1, 0)
     count = 0
 
-    grid[pos[0]][pos[1]] = "U"
-    next_pos = (pos[0] + direction[0], pos[1] + direction[1])
-    logger.debug(parse_char_array_to_string(grid))
-    while next_pos[0] >= 0 and next_pos[0] < len(grid) and next_pos[1] >= 0 and next_pos[1] < len(grid[0]):
-        next_pos = (pos[0] + direction[0], pos[1] + direction[1])
-        logger.debug(f"Current position: {pos}")
-        logger.debug(f"Current direction: {direction}")
-        logger.debug(f"Next position: {next_pos}")
-        if grid[next_pos[0]][next_pos[1]] == "#":
-            logger.debug("Wall! Turning right")
-            direction = (direction[1], -direction[0])
-            logger.debug(parse_char_array_to_string(grid))
-            continue
+    # while we're still in the grid
+    while within_bounds(grid, pos):
+        # append current direction to the position
+        char = get_dir_char(direction)
+        if grid[pos[0]][pos[1]] == ".":
+            grid[pos[0]][pos[1]] = char
+        else:
+            grid[pos[0]][pos[1]] += char
 
-        check_dir = check_dir_map[direction[0]][direction[1]]
-        check_pos = (pos[0]+check_dir[0], pos[1]+check_dir[1])
-        logger.debug(f"Checking position: {check_pos} for {check_dir[2]}. Has {grid[check_pos[0]][check_pos[1]]}")
-        if check_direction(deepcopy(grid), (check_dir[0], check_dir[1]), deepcopy(pos), check_dir[2]):
-            logger.debug(f"Found loop pos at {check_pos[0]}, {check_pos[1]}")
-            grid[next_pos[0]][next_pos[1]] = "!"
-            logger.debug(parse_char_array_to_string(grid))
-            count += 1
-        pos = (pos[0] + direction[0], pos[1] + direction[1])
-        grid[next_pos[0]][next_pos[1]] = dir_map[direction[0]][direction[1]]
-        next_pos = (pos[0] + direction[0], pos[1] + direction[1])
+        # get next step
+        next_pos = step(pos, direction)
 
-    logger.debug(parse_char_array_to_string(grid))
+        if within_bounds(grid, next_pos) and grid[next_pos[0]][next_pos[1]] == "#":
+            # if wall, can continue without checking to the right (since we're now going that way)
+            direction = turn_right(direction)
+        else:
+            if within_bounds(grid, next_pos) and grid[next_pos[0]][next_pos[1]] == ".":
+                # can only place a block if we've not been to the tile
+
+                # make new grid with obstacle in front
+                ngrid = deepcopy(grid)
+                ngrid[next_pos[0]][next_pos[1]] = "#"
+                if check_direction(ngrid, pos, turn_right(direction)):
+                    count += 1
+            pos = next_pos
+
     return count
+
+
 
 
 if __name__ == "__main__":
@@ -126,8 +166,5 @@ if __name__ == "__main__":
         pass
 
     grid = parse_file_to_char_array(file)
-    logger.print(grid)
-    logger.print(map_patrol(deepcopy(grid)))
-
-    logger.enable()
-    logger.print(find_loops(grid))
+    logger.print(f"The guard visits {map_patrol(deepcopy(grid))} distinct positions")
+    logger.print(f"There are {find_loops(grid)} positions that a block can be placed to create a loop")
