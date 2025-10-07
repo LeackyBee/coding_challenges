@@ -123,8 +123,6 @@ def defragment_whole_file(disk_map):
                 break
     return checksum(disk_map)
 
-
-
 if __name__ == "__main__":
     filepath = input("Input File Path: ")
 
@@ -137,5 +135,5 @@ if __name__ == "__main__":
 
     disk_map = parse_file_to_string(file)
 
-    #logger.print(defragment(disk_map))
-    logger.print(defragment_whole_file(disk_map))
+    logger.print(f"Fragmented checksum = {defragment(disk_map)}")
+    logger.print(f"Whole file defragmented checksum: {defragment_whole_file(disk_map)}")
