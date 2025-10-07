@@ -1,7 +1,7 @@
 import io
 from copy import deepcopy
 
-from AdventOfCode.parse_utils import parse_file_to_char_array, parse_char_array_to_string
+from AdventOfCode.parse_utils import parse_file_to_char_matrix, parse_char_array_to_string
 from Utils.logger import logger
 from Utils.matrix_utils import step, within_bounds
 
@@ -156,6 +156,6 @@ if __name__ == "__main__":
     except:
         pass
 
-    grid = parse_file_to_char_array(file)
+    grid = parse_file_to_char_matrix(file)
     logger.print(f"The guard visits {map_patrol(deepcopy(grid))} distinct positions")
     logger.print(f"There are {find_loops(grid)} positions that a block can be placed to create a loop")

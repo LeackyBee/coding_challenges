@@ -1,4 +1,4 @@
-from AdventOfCode.parse_utils import parse_file_to_char_array
+from AdventOfCode.parse_utils import parse_file_to_char_matrix
 from Utils.logger import logger
 
 def filter_options(options, x, y):
@@ -84,7 +84,7 @@ if __name__  == "__main__":
             ]
     try:
         with open(filepath) as file:
-            grid = parse_file_to_char_array(file)
+            grid = parse_file_to_char_matrix(file)
     except Exception as e:
         logger.print(e)
         pass
