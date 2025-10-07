@@ -2,7 +2,7 @@ import io
 
 from AdventOfCode.parse_utils import parse_file_to_int_matrix
 from Utils.logger import logger
-from Utils.matrix_utils import within_bounds
+from Utils.matrix_utils import within_bounds, get_valid_neighbours
 
 """
 This is essentially breadth first search again, but we only consider links where the value increases by 1
@@ -18,11 +18,7 @@ def find_trailheads(grid):
                 output.append((i, j))
     return output
 
-def get_neighbours(grid, i, j):
-    neighbours = [(i+1, j), (i-1, j), (i, j+1), (i, j-1)]
-    logger.debug(f"Neighbours: {neighbours}")
-    neighbours = [x for x in neighbours if within_bounds(grid, x)]
-    return neighbours
+
 
 def count_trailhead_scores(grid):
     trailheads = find_trailheads(grid)
@@ -35,7 +31,7 @@ def count_trailhead_scores(grid):
             npositions = set()
             for position in positions:
                 logger.debug(f"Current position: {position}")
-                neighbours = get_neighbours(grid, position[0], position[1])
+                neighbours = get_valid_neighbours(grid, position[0], position[1])
                 logger.debug(f"Current neighbours: {positions}")
                 for neighbour in neighbours:
                     if grid[neighbour[0]][neighbour[1]] == i:
@@ -56,7 +52,7 @@ def get_trailhead_rating(grid):
             npositions = []
             for position in positions:
                 logger.debug(f"Current position: {position}")
-                neighbours = get_neighbours(grid, position[0], position[1])
+                neighbours = get_valid_neighbours(grid, position[0], position[1])
                 logger.debug(f"Current neighbours: {positions}")
                 for neighbour in neighbours:
                     if grid[neighbour[0]][neighbour[1]] == i:
