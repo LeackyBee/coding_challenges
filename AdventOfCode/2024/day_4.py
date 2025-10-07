@@ -1,5 +1,5 @@
 from AdventOfCode.parse_utils import parse_file_to_char_array
-from Utils.Logger import logger
+from Utils.logger import logger
 
 def filter_options(options, x, y):
     valid_options = []

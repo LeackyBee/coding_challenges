@@ -2,7 +2,7 @@ import io
 from copy import deepcopy
 
 from AdventOfCode.parse_utils import parse_file_to_char_array, parse_char_array_to_string
-from Utils.Logger import logger
+from Utils.logger import logger
 
 """
 Part 2 here (find_loops) took me way longer than normal, the key insight was that you can't place a block on the path.
