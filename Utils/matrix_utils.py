@@ -9,3 +9,6 @@ def get_valid_neighbours(grid, i, j):
     neighbours = [(i+1, j), (i-1, j), (i, j+1), (i, j-1)]
     neighbours = [x for x in neighbours if within_bounds(grid, x)]
     return neighbours
+
+def get_all_neighbours(i, j):
+    return [(i+1, j), (i-1, j), (i, j+1), (i, j-1)]

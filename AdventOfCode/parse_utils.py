@@ -18,3 +18,7 @@ def parse_file_to_int_array(file):
 
 def parse_char_array_to_string(char_array):
     return "\n".join(["".join(line) for line in char_array])
+
+def parse_int_array_to_string(array):
+    array = [[str(cell) for cell in line] for line in array]
+    return "\n".join(["".join(line) for line in array])
