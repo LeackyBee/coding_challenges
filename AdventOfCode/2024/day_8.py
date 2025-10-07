@@ -1,6 +1,6 @@
 import io
 
-from AdventOfCode.parse_utils import parse_file_to_char_array
+from AdventOfCode.parse_utils import parse_file_to_char_matrix
 from Utils.logger import logger
 from Utils.matrix_utils import within_bounds
 
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     except:
         pass
 
-    grid = parse_file_to_char_array(file)
+    grid = parse_file_to_char_matrix(file)
     logger.enable()
     logger.print(find_antinodes(grid))
     logger.print(find_antinodes_with_resonance(grid))
