@@ -17,8 +17,9 @@ and keep track of the largest id
 Now, from max_id -> 0
 size = end-start
 for i in empty_positions:
-if the position is big enough, move file over and update the start and end for the position
+if the position is big enough and is to the left of the files position, move file over and update the start and end for the empty position
 No need to update the empty positions list, we can't move a new file to the newly opened position so no point updating it
+No need to update the file locations map either, we won't re-reference it
 """
 
 def checksum(disk_map):
@@ -118,6 +119,8 @@ def defragment_whole_file(disk_map):
 
                 logger.debug(disk_map)
                 break
+            if epos[0] > pos[0]:
+                break
     return checksum(disk_map)
 
 
@@ -134,6 +137,5 @@ if __name__ == "__main__":
 
     disk_map = parse_file_to_string(file)
 
-    logger.enable()
     #logger.print(defragment(disk_map))
     logger.print(defragment_whole_file(disk_map))
