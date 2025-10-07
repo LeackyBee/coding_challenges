@@ -3,6 +3,7 @@ from copy import deepcopy
 
 from AdventOfCode.parse_utils import parse_file_to_char_array, parse_char_array_to_string
 from Utils.logger import logger
+from Utils.matrix_utils import step, within_bounds
 
 """
 Part 2 here (find_loops) took me way longer than normal, the key insight was that you can't place a block on the path.
@@ -24,11 +25,6 @@ def turn_right(direction):
     logger.debug("Turning right!")
     return (direction[1], -direction[0])
 
-def within_bounds(grid, pos):
-    return pos[0] >=0 and pos[0] < len(grid) and pos[1] >= 0 and pos[1] < len(grid[0])
-
-def step(pos, direction):
-    return (pos[0] + direction[0], pos[1] + direction[1])
 
 def get_dir_char(direction):
     dir_map = {
@@ -99,8 +95,6 @@ def check_direction(grid, pos, direction):
             pos = next_pos
     return False
 
-
-
 def find_loops(grid):
     # find guard pos
     # set pos = guard pos
@@ -142,9 +136,6 @@ def find_loops(grid):
             pos = next_pos
 
     return count
-
-
-
 
 if __name__ == "__main__":
     filepath = input("Input File Path: ")
