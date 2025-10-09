@@ -10,10 +10,16 @@ def parse_file_to_int_matrix(file):
         output.append([int(x) for x in list(line.strip())])
     return output
 
-def parse_file_to_int_array(file):
+def parse_file_to_int_matrix(file, sep=" "):
+    output = []
+    for line in file:
+        output.append([int(x.strip()) for x in line.strip().split(sep)])
+    return output
+
+def parse_file_to_int_array(file, sep=" "):
     # assert only one line
     for line in file:
-        return [int(x.strip()) for x in line.split(" ")]
+        return [int(x.strip()) for x in line.split(sep)]
 
 
 def parse_char_array_to_string(char_array):
