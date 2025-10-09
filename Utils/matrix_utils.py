@@ -23,3 +23,7 @@ def turn_left(direction, count=1):
     for i in range(count):
         output = (-output[1], output[0])
     return output
+
+
+def init_matrix(i,j, init_value=None):
+    return [[init_value for _ in range(j)] for _ in range(i)]
