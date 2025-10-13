@@ -1,6 +1,6 @@
 import io
 
-from AdventOfCode.parse_utils import parse_char_array_to_string
+from AdventOfCode.parse_utils import parse_matrix_to_string
 from Utils.logger import logger
 from Utils.matrix_utils import step
 
@@ -84,7 +84,7 @@ def simulate_robot(grid, instructions):
                 # if this has happened, the free space is behind a box, so we're pushing a box into it
                 grid[free[0]][free[1]] = "O"
             pos = npos
-        logger.debug(parse_char_array_to_string(grid))
+        logger.debug(parse_matrix_to_string(grid))
 
     count = 0
     for i in range(len(grid)):
@@ -128,7 +128,7 @@ def simulate_robot_doublewide(grid, instructions):
                 # if this has happened, the free space is behind a box, so we're pushing a box into it
                 grid[free[0]][free[1]] = "O"
             pos = npos
-        logger.debug(parse_char_array_to_string(grid))
+        logger.debug(parse_matrix_to_string(grid))
 
     count = 0
     for i in range(len(grid)):
@@ -180,11 +180,11 @@ v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^""")
         pass
 
     grid, instructions = parse_file(file)
-    logger.print(parse_char_array_to_string(grid))
+    logger.print(parse_matrix_to_string(grid))
     logger.print(instructions)
     logger.print(f"Sum of box coordinates = {simulate_robot(grid, instructions)}")
 
     file.seek(0)
     grid, instructions = parse_file_double_wide(file)
-    logger.print(parse_char_array_to_string(grid))
+    logger.print(parse_matrix_to_string(grid))
     logger.print(instructions)

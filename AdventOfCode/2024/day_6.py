@@ -1,7 +1,7 @@
 import io
 from copy import deepcopy
 
-from AdventOfCode.parse_utils import parse_file_to_char_matrix, parse_char_array_to_string
+from AdventOfCode.parse_utils import parse_file_to_char_matrix, parse_matrix_to_string
 from Utils.logger import logger
 from Utils.matrix_utils import step, within_bounds
 
@@ -46,7 +46,7 @@ def map_patrol(grid):
     pos = find_start(grid)
     direction = (-1,0)
     count = 0
-    logger.debug(parse_char_array_to_string(grid))
+    logger.debug(parse_matrix_to_string(grid))
     while within_bounds(grid, pos):
         if grid[pos[0]][pos[1]] != "X":
             grid[pos[0]][pos[1]] = "X"
@@ -57,10 +57,10 @@ def map_patrol(grid):
         logger.debug(f"Next position: {next_pos}")
         if within_bounds(grid, next_pos) and grid[next_pos[0]][next_pos[1]] == "#":
             direction = turn_right(direction)
-            logger.debug(parse_char_array_to_string(grid))
+            logger.debug(parse_matrix_to_string(grid))
         else:
             pos = next_pos
-    logger.debug(parse_char_array_to_string(grid))
+    logger.debug(parse_matrix_to_string(grid))
     return count
 
 def check_direction(grid, pos, direction):
@@ -75,7 +75,7 @@ def check_direction(grid, pos, direction):
     char = get_dir_char(direction)
     logger.debug("Checking direction...")
     logger.debug(f"Current grid")
-    logger.debug(parse_char_array_to_string(grid))
+    logger.debug(parse_matrix_to_string(grid))
     logger.debug(f"Current position: {pos}")
     logger.debug(f"Current direction: {direction}")
     logger.debug("Entering loop")

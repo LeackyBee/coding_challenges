@@ -2,8 +2,8 @@ import io
 from copy import deepcopy
 from heapq import heapify, heappop, heappush
 
-from AdventOfCode.parse_utils import parse_file_to_int_array, parse_file_to_int_matrix, parse_char_array_to_string, \
-    parse_int_array_to_string
+from AdventOfCode.parse_utils import parse_file_to_int_array, parse_file_to_int_matrix, parse_matrix_to_string, \
+    parse_matrix_to_string
 from Utils.logger import logger
 from Utils.matrix_utils import step, get_valid_neighbours, init_matrix
 
