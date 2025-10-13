@@ -1,7 +1,7 @@
 import io
 from math import floor
 
-from AdventOfCode.parse_utils import parse_char_array_to_string
+from AdventOfCode.parse_utils import parse_matrix_to_string
 from Utils.logger import logger
 from Utils.matrix_utils import step
 
@@ -26,7 +26,7 @@ def get_display(robots, max_x, max_y):
     grid = [[" " for _ in range(max_x)] for _ in range(max_y)]
     for robot in robots:
         grid[robot[0][1]][robot[0][0]] = "#"
-    logger.debug(parse_char_array_to_string(grid))
+    logger.debug(parse_matrix_to_string(grid))
 
 def iterate_robots(robots, max_x, max_y, seconds=100):
     logger.debug(f"Iterating robots: {robots}")

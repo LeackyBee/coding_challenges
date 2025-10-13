@@ -1,7 +1,7 @@
 import io
 from copy import deepcopy
 
-from AdventOfCode.parse_utils import parse_file_to_char_matrix, parse_char_array_to_string, parse_int_array_to_string
+from AdventOfCode.parse_utils import parse_file_to_char_matrix, parse_matrix_to_string, parse_matrix_to_string
 from Utils.logger import logger
 from Utils.matrix_utils import get_all_neighbours, within_bounds
 
@@ -39,7 +39,7 @@ def explore_region(grid, i, j, id):
     perimeter = []
     area = {(i, j)}
     frontier = [(i,j)]
-    logger.debug(parse_int_array_to_string(grid))
+    logger.debug(parse_matrix_to_string(grid))
     while frontier:
         logger.debug()
 
@@ -56,7 +56,7 @@ def explore_region(grid, i, j, id):
                     area.add(neighbour)
                     nfrontier.append(neighbour)
         frontier = nfrontier
-        logger.debug(parse_int_array_to_string(grid))
+        logger.debug(parse_matrix_to_string(grid))
     logger.debug()
     return perimeter, area
 
@@ -68,7 +68,7 @@ def find_regions(grid):
             # if value is not None, the tile has not been explored
             if type(grid[i][j]) is not int:
                 regions[next_id] = explore_region(grid, i, j, next_id)
-                logger.debug(parse_int_array_to_string(grid))
+                logger.debug(parse_matrix_to_string(grid))
                 logger.debug()
                 next_id += 1
     return regions
@@ -94,7 +94,7 @@ def mark_perimeters(grid, regions):
             if region not in grid[nnode[0]][nnode[1]]:
                 grid[nnode[0]][nnode[1]].append(region)
         logger.debug(f"Marked {region}")
-        logger.debug(parse_int_array_to_string(grid))
+        logger.debug(parse_matrix_to_string(grid))
     return grid
 
 
@@ -104,7 +104,7 @@ def find_lines(grid):
     grid = mark_perimeters(grid, regions)
 
     logger.debug("Marked Perimeters")
-    logger.debug(parse_int_array_to_string(grid))
+    logger.debug(parse_matrix_to_string(grid))
 
     for i in range(len(grid)):
         for j in range(len(grid[i])):
