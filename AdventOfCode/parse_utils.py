@@ -25,3 +25,9 @@ def parse_file_to_int_array(file, sep=" "):
 def parse_matrix_to_string(grid):
     grid = [[str(cell) for cell in line] for line in grid]
     return "\n".join(["".join(line) for line in grid])
+
+def parse_file_to_lines(file):
+    output = []
+    for line in file:
+        output.append(list(line.strip()))
+    return output
