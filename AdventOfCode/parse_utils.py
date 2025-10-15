@@ -31,3 +31,9 @@ def parse_file_to_lines(file):
     for line in file:
         output.append(list(line.strip()))
     return output
+
+def parse_file_to_line(file):
+    output = ""
+    for line in file:
+        output += line.strip()
+    return output
