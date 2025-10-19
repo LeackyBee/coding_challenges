@@ -11,6 +11,8 @@ def main():
             line = input()
         except EOFError:
             break
+        if not line:
+            break
         lines.append(line)
     for string in lines:
         bits = [format(B64_ALPHABET.index(char), "06b") for char in list(string) if char != "="]
