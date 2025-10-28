@@ -1,5 +1,6 @@
 from typing import Optional, List
 
+from Utils.list import ListNode
 from Utils.logger import logger
 
 """
@@ -8,17 +9,6 @@ We could then just set curr.next = list and be done, but this comes at a risk si
 A solution to this is to deepcopy the list, but that operation is as expensive as the while loop, 
 so instead we keep it simple and just iterate over the elements until we have no carry, l1, or l2
 """
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-    def __str__(self):
-        return f"{self.val}, {self.next}"
-
-    def __eq__(self, other):
-        return self.val == other.val and self.next == other.next
 
 def list_from_array(arr: List) -> ListNode:
     listNode = None
