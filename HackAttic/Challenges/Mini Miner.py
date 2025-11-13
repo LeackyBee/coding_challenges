@@ -1,18 +1,9 @@
-import json
 import sys
 
 import requests
 import orjson
 import hashlib
 import random
-
-
-def value():
-    x = random.randint(0,sys.maxsize//2)
-
-    while True:
-        yield x
-        x += 1
 
 if __name__ == "__main__":
     access_token = input("Input access token:")
@@ -31,8 +22,8 @@ if __name__ == "__main__":
     num = random.randint(0,sys.maxsize//2)
     while True:
         block["nonce"] = num
-        test_str = json.dumps(block, sort_keys=True).replace(" ", "")
-        hash = hashlib.sha256(test_str.encode()).hexdigest()
+        test_str = orjson.dumps(block, option=orjson.OPT_SORT_KEYS)
+        hash = hashlib.sha256(test_str).hexdigest()
         binary_hash = bin(int(hash, 16))[2:].zfill(256)
         if binary_hash[:difficulty] == required_prefix:
             print(f"Found nonce at {num}")
