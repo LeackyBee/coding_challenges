@@ -1,7 +1,7 @@
 import io
 from copy import deepcopy
 
-from AdventOfCode.parse_utils import parse_file_to_char_matrix, parse_matrix_to_string
+from Utils.parse_utils import parse_file_to_char_matrix, parse_matrix_to_string
 from Utils.logger import logger
 from Utils.matrix_utils import step, within_bounds
 

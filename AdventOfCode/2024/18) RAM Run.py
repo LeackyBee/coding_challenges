@@ -2,10 +2,9 @@ import io
 from copy import deepcopy
 from heapq import heapify, heappop, heappush
 
-from AdventOfCode.parse_utils import parse_file_to_int_array, parse_file_to_int_matrix, parse_matrix_to_string, \
-    parse_matrix_to_string
+from Utils.parse_utils import parse_file_to_int_matrix
 from Utils.logger import logger
-from Utils.matrix_utils import step, get_valid_neighbours, init_matrix
+from Utils.matrix_utils import get_valid_neighbours, init_matrix
 
 def iterate(grid, positions, count):
     for i in range(count):

@@ -2,7 +2,7 @@ from heapq import *
 
 import io
 
-from AdventOfCode.parse_utils import parse_file_to_char_matrix, parse_matrix_to_string, parse_matrix_to_string
+from Utils.parse_utils import parse_file_to_char_matrix
 from Utils.logger import logger
 from Utils.matrix_utils import get_all_neighbours, step, turn_right, turn_left
 

@@ -1,9 +1,9 @@
 import io
 from curses.ascii import isdigit
 
-from AdventOfCode.parse_utils import parse_file_to_line, parse_file_to_char_matrix
+from Utils.parse_utils import parse_file_to_char_matrix
 from Utils.logger import logger
-from Utils.matrix_utils import get_all_neighbours, within_bounds, get_valid_neighbours
+from Utils.matrix_utils import within_bounds, get_valid_neighbours
 
 """
 Parse to grid of characters

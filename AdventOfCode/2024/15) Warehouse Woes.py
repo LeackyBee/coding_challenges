@@ -1,6 +1,6 @@
 import io
 
-from AdventOfCode.parse_utils import parse_matrix_to_string
+from Utils.parse_utils import parse_matrix_to_string
 from Utils.logger import logger
 from Utils.matrix_utils import step
 
