@@ -1,7 +1,7 @@
 import io
 from curses.ascii import isdigit
 
-from AdventOfCode.parse_utils import parse_file_to_lines
+from Utils.parse_utils import parse_file_to_lines
 from Utils.logger import logger
 
 """

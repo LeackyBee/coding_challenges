@@ -10,7 +10,7 @@ def parse_file_to_int_matrix(file):
         output.append([int(x) for x in list(line.strip())])
     return output
 
-def parse_file_to_int_matrix(file, sep=" "):
+def parse_file_to_int_matrix_with_sep(file, sep=" "):
     output = []
     for line in file:
         output.append([int(x.strip()) for x in line.strip().split(sep)])

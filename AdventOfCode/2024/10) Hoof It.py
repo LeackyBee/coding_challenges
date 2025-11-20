@@ -1,8 +1,8 @@
 import io
 
-from AdventOfCode.parse_utils import parse_file_to_int_matrix
+from Utils.parse_utils import parse_file_to_int_matrix
 from Utils.logger import logger
-from Utils.matrix_utils import within_bounds, get_valid_neighbours
+from Utils.matrix_utils import get_valid_neighbours
 
 """
 This is essentially breadth first search again, but we only consider links where the value increases by 1

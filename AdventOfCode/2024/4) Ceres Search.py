@@ -1,4 +1,4 @@
-from AdventOfCode.parse_utils import parse_file_to_char_matrix
+from Utils.parse_utils import parse_file_to_char_matrix
 from Utils.logger import logger
 
 def filter_options(options, x, y):

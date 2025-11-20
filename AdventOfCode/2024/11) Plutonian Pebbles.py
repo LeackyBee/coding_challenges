@@ -1,6 +1,6 @@
 import io
 
-from AdventOfCode.parse_utils import parse_file_to_int_array
+from Utils.parse_utils import parse_file_to_int_array
 from Utils.logger import logger
 
 """
