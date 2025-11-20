@@ -1,4 +1,24 @@
-from math import sqrt
+from math import prod
+
+
+def generate_primes_until(n):
+    if n < 2:
+        return []
+    output = [2]
+    i = 1
+
+    while i < n:
+        i += 2
+        divisible = False
+        for div in output:
+            if i % div == 0:
+                divisible = True
+                break
+        if not divisible:
+            output.append(i)
+    return output
+
+primes = generate_primes_until(100)
 
 def triangularNumbers():
     i = 1
@@ -9,21 +29,20 @@ def triangularNumbers():
         yield number
 
 
-def find_divisors(number):
-    output = []
-    for i in range(1,int(sqrt(number)+1)):
-        if number % i == 0:
-            output.append(i)
-            if i != number // i:
-                output.append(number//i)
-    return output
+def find_num_divisors(number):
+    exponents = []
+    for i in primes:
+        exponents.append(0)
+        while number % i == 0:
+            exponents[-1] += 1
+            number = number // i
+        if i == 1:
+            break
+    return prod([x+1 for x in exponents])
 
 if __name__ == "__main__":
     for number in triangularNumbers():
-        divisors = find_divisors(number)
-        if len(divisors) >= 500:
+        divisors = find_num_divisors(number)
+        if divisors >= 500:
             print(number)
             break
-        else:
-            pass
-            #print(f"Checked {number}, only {len(divisors)} divisors, and they are {sorted(divisors)}")
