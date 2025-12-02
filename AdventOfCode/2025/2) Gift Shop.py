@@ -66,6 +66,4 @@ if __name__ == "__main__":
     logger.disable()
     lines = parseRanges(file)
 
-    #checkIfSilly(22)
-
     logger.print(findInvalid(lines))
