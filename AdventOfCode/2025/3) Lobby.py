@@ -1,10 +1,8 @@
 import io
-from curses.ascii import isdigit
 from typing import List
 
 from Utils.parse_utils import parse_file_to_lines
 from Utils.logger import logger
-
 
 
 def findMaxJoltage(banks:List[str], batteries:int):
@@ -25,7 +23,6 @@ def findMaxJoltage(banks:List[str], batteries:int):
         output += int(joltage)
 
     return output
-
 
 
 if __name__ == "__main__":
