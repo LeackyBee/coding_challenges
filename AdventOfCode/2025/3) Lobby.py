@@ -12,9 +12,9 @@ def findMaxJoltage(banks:List[str], batteries:int):
     for bank in banks:
         prevI = -1
         joltage = ""
-        for i in range(batteries):
+        for i in range(batteries-1, -1, -1):
             maxBattery = "0"
-            for i in range(prevI+1, len(bank) - batteries + i + 1):
+            for i in range(prevI+1, len(bank) - i):
                 if bank[i] > maxBattery:
                     maxBattery = bank[i]
                     prevI = i
@@ -44,4 +44,4 @@ if __name__ == "__main__":
     logger.enable()
     lines = parse_file_to_lines(file)
 
-    logger.print(findMaxJoltage(lines, 2))
+    logger.print(findMaxJoltage(lines, 12))
