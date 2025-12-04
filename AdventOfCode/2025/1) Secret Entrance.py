@@ -1,5 +1,4 @@
 import io
-from curses.ascii import isdigit
 
 from Utils.parse_utils import parse_file_to_lines
 from Utils.logger import logger
@@ -22,7 +21,7 @@ def find_zeroes2(rotations: list[str]):
     crotation = 0
     direction = rotations[0][0]
 
-    def performRotation(direction, value):
+    def perform_rotation(direction, value):
         nonlocal output, curr
         wasZero = curr == 0
         logger.debug(f"Performing {direction} rotation of value {value}!")
@@ -50,12 +49,12 @@ def find_zeroes2(rotations: list[str]):
         if direction == ndirection:
             crotation += value
         else:
-            performRotation(direction, crotation)
+            perform_rotation(direction, crotation)
 
             direction = ndirection
             crotation = value
 
-    performRotation(direction, crotation)
+    perform_rotation(direction, crotation)
 
     return output
 

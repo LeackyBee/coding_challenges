@@ -1,10 +1,8 @@
 import io
-from curses.ascii import isdigit
 
-from Utils.parse_utils import parse_file_to_lines
 from Utils.logger import logger
 
-def parseRanges(file):
+def parse_ranges(file):
     output = []
 
     for line in file:
@@ -12,7 +10,7 @@ def parseRanges(file):
 
     return output
 
-def checkIfSilly1(num):
+def check_if_silly1(num):
     length = len(str(num))
 
     if length % 2 != 0:
@@ -25,7 +23,7 @@ def checkIfSilly1(num):
         return True
     return False
 
-def checkIfSilly2(num):
+def check_if_silly2(num):
     length = len(str(num))
 
     for i in range(1,length//2+1):
@@ -38,7 +36,7 @@ def checkIfSilly2(num):
     return False
 
 
-def findInvalid(ranges):
+def find_invalid(ranges):
     output = 0
 
     for srange in ranges:
@@ -48,7 +46,7 @@ def findInvalid(ranges):
 
         for num in range(start, end+1):
             logger.debug(f"Testing {num}")
-            if checkIfSilly2(num):
+            if check_if_silly2(num):
                 output += num
 
     return output
@@ -64,6 +62,6 @@ if __name__ == "__main__":
         pass
 
     logger.disable()
-    lines = parseRanges(file)
+    lines = parse_ranges(file)
 
-    logger.print(findInvalid(lines))
+    logger.print(find_invalid(lines))
