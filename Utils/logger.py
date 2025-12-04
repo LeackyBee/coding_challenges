@@ -17,5 +17,8 @@ class Logger:
     def print(self, message = ""):
         print(str(message))
 
+    def is_enabled(self):
+        return self._enabled
+
 
 logger = Logger()
