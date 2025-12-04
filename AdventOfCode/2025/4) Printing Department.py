@@ -102,5 +102,5 @@ if __name__ == "__main__":
 
     logger.disable()
 
-    #logger.print(get_accessible_rolls(grid))
-    logger.print(simulate(grid))
+    logger.print(f"Part 1 Solution = {get_accessible_rolls(grid)}")
+    logger.print(f"Part 2 Solution = {simulate(grid)}")
