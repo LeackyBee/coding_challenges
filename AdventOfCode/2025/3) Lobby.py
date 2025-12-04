@@ -5,7 +5,7 @@ from Utils.parse_utils import parse_file_to_lines
 from Utils.logger import logger
 
 
-def findMaxJoltage(banks:List[str], batteries:int):
+def find_max_joltage(banks:List[str], batteries:int):
     output = 0
     for bank in banks:
         prevI = -1
@@ -41,4 +41,4 @@ if __name__ == "__main__":
     logger.enable()
     lines = parse_file_to_lines(file)
 
-    logger.print(findMaxJoltage(lines, 12))
+    logger.print(find_max_joltage(lines, 12))
