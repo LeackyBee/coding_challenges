@@ -37,13 +37,23 @@ def findFresh(lines: list[str]):
     for start, end in ranges:
         total_fresh_options += end - start + 1
 
+    ids = []
     for id in lines:
-        for start, end in ranges:
-            id = int(id)
-            if id >= start and id <= end:
-                logger.debug(f"{id} is fresh!")
-                total_fresh_ingredients += 1
-                break
+        ids.append(int(id))
+
+    curr_range_i = 0
+    curr_id_i = 0
+    while curr_id_i < len(ids) and curr_range_i < len(ranges):
+        curr_id = ids[curr_id_i]
+        curr_range = ranges[curr_range_i]
+
+        if curr_id > curr_range[1]:
+            curr_range_i += 1
+        elif curr_range[0] <= curr_id <= curr_range[1]:
+            total_fresh_ingredients += 1
+            curr_id_i += 1
+        else:
+            curr_id_i += 1
 
     return total_fresh_ingredients, total_fresh_options
 
