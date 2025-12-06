@@ -1,7 +1,17 @@
-def parse_file_to_char_matrix(file):
+def parse_file_to_char_matrix(file, strip = True):
     output = []
     for line in file:
-        output.append(list(line.strip()))
+        if strip:
+            row = line.strip()
+        else:
+            row = line
+        output.append(list(row))
+    return output
+
+def parse_file_to_str_matrix_with_sep(file, sep=" "):
+    output = []
+    for line in file:
+        output.append([x.strip() for x in line.strip().split(sep) if x])
     return output
 
 def parse_file_to_int_matrix(file):
@@ -13,7 +23,7 @@ def parse_file_to_int_matrix(file):
 def parse_file_to_int_matrix_with_sep(file, sep=" "):
     output = []
     for line in file:
-        output.append([int(x.strip()) for x in line.strip().split(sep)])
+        output.append([int(x.strip()) for x in line.strip().split(sep) if x])
     return output
 
 def parse_list_of_ints(file, sep=" "):
